@@ -29,7 +29,7 @@ function App() {
         가나다 순 정렬
       </button>
 
-      <div className="list">
+      {/* <div className="list">
         <h4 onClick={() => {
           setModal(!modal)
         }}>
@@ -42,19 +42,31 @@ function App() {
           modal === true ? <Modal /> : null
         }
         <p>발행 날짜</p>
-      </div>
+      </div> */}
 
-      <div className="list">
-        <h4>{title[1]}</h4>
-        <p>발행 날짜</p>
-      </div>
+      {
+        title.map(function (item, idx) {
+          return (
+            <div className="list" key={idx}>
+              <h4 onClick={() => {
+                setModal(!modal)
+              }}>{title[idx]} <span onClick={() => {
+                setLike(like + 1);
+              }}> 👍🏻</span> {like}
+              </h4>
+              {
+                modal === true ? <Modal /> : null
+              }
+              <p>발행 날짜</p>
+            </div>
+          )
+        })
+      }
 
-      <div className="list">
+      {/* <div className="list">
         <h4>{title[2]}</h4>
         <p>발행 날짜</p>
-      </div>
-
-
+      </div> */}
 
     </div >
   )
