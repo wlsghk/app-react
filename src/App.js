@@ -5,8 +5,8 @@ import { useState } from 'react';
 function App() {
 
   let [title, setTitle] = useState(['남자코트 추천', '강남 우동맛집', '파이썬 독학']);
-  let [like, setLike] = useState(0);
-  let [modal, setModal] = useState(false);
+  let [like, setLike] = useState([0, 0, 0]);
+  let [modal, setModal] = useState([false, false, false]);
 
   return (
     <div className="App">
@@ -45,17 +45,25 @@ function App() {
       </div> */}
 
       {
-        title.map(function (item, idx) {
+        title.map(function (item, i) {
           return (
-            <div className="list" key={idx}>
+            <div className="list" key={i}>
               <h4 onClick={() => {
-                setModal(!modal)
-              }}>{title[idx]} <span onClick={() => {
-                setLike(like + 1);
-              }}> 👍🏻</span> {like}
+                let copyModal = [...modal];
+                copyModal[i] = !copyModal[i];
+                setModal(copyModal);
+              }}>{title[i]} <span onClick={() => {
+                let copyLike = [...like];
+                copyLike[i] = copyLike[i] + 1;
+                setLike(copyLike);
+              }}> 👍🏻</span> {like[i]}
               </h4>
               {
-                modal === true ? <Modal /> : null
+                modal[i] === true ? <Modal onClose={() => {
+                  let copyModal = [...modal];
+                  copyModal[i] = false;
+                  setModal(copyModal)
+                }} /> : null
               }
               <p>발행 날짜</p>
             </div>
