@@ -7,6 +7,7 @@ function App() {
   let [title, setTitle] = useState(['남자코트 추천', '강남 우동맛집', '파이썬 독학']);
   let [like, setLike] = useState([0, 0, 0]);
   let [modal, setModal] = useState([false, false, false]);
+  let [inputValue, setInputValue] = useState('');
 
   return (
     <div className="App">
@@ -14,14 +15,14 @@ function App() {
         <h4 >블로그 복습</h4>
       </header>
 
-      <button onClick={() => {
+      {/* <button onClick={() => {
         let copyTitle = [...title];
         copyTitle[0] = '여자 코트 추천';
         setTitle(copyTitle);
         console.log(copyTitle)
       }}>
         수정 버튼
-      </button>
+      </button> */}
       <button onClick={() => {
         let copyTitle = [...title];
         copyTitle.sort();
@@ -53,7 +54,8 @@ function App() {
                 let copyModal = [...modal];
                 copyModal[i] = !copyModal[i];
                 setModal(copyModal);
-              }}>{title[i]} <span onClick={() => {
+              }}>{title[i]} <span onClick={(e) => {
+                e.stopPropagation();
                 let copyLike = [...like];
                 copyLike[i] = copyLike[i] + 1;
                 setLike(copyLike);
@@ -67,10 +69,22 @@ function App() {
                 }} /> : null
               }
               <p>발행 날짜</p>
+              <button onClick={() => {
+                let copy = [...title];
+                copy.splice(i, 1);
+                setTitle(copy)
+              }}>삭제</button>
             </div>
           )
         })
       }
+      <input onChange={(e) => {
+        setInputValue(e.target.value);
+      }} /><button onClick={() => {
+        let copy = [...title];
+        copy.unshift(inputValue);
+        setTitle(copy)
+      }}>등록</button>
 
       {/* <div className="list">
         <h4>{title[2]}</h4>
