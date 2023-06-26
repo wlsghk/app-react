@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
 
 function App() {
 
@@ -8,6 +11,17 @@ function App() {
   let [like, setLike] = useState([0, 0, 0]);
   let [modal, setModal] = useState([false, false, false]);
   let [inputValue, setInputValue] = useState('');
+  let [timer, setTimer] = useState(dayjs())
+  timer.format();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer(dayjs())
+    }, 1000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [timer])
 
   return (
     <div className="App">
@@ -68,7 +82,7 @@ function App() {
                   setModal(copyModal)
                 }} /> : null
               }
-              <p>발행 날짜</p>
+              <p>{timer.format("MM.DD HH:mm")} 발행</p>
               <button onClick={() => {
                 let copy = [...title];
                 copy.splice(i, 1);
