@@ -5,14 +5,28 @@ import dayjs from 'dayjs';
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 
-function App() {
 
+function App() {
   let [title, setTitle] = useState(['남자코트 추천', '강남 우동맛집', '파이썬 독학']);
   let [like, setLike] = useState([0, 0, 0]);
   let [modal, setModal] = useState([false, false, false]);
   let [inputValue, setInputValue] = useState('');
   let [timer, setTimer] = useState(dayjs())
   timer.format();
+
+  const Alert = (e) => {
+    setInputValue(e.target.value);
+  }
+
+  const Submit = () => {
+    if (inputValue.trim() === '') {
+      alert('값이 비었습니다')
+    } else {
+      let copy = [...title];
+      copy.unshift(inputValue);
+      setTitle(copy);
+    }
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -92,13 +106,8 @@ function App() {
           )
         })
       }
-      <input onChange={(e) => {
-        setInputValue(e.target.value);
-      }} /><button onClick={() => {
-        let copy = [...title];
-        copy.unshift(inputValue);
-        setTitle(copy)
-      }}>등록</button>
+      <input value={inputValue} onChange={Alert} /><button onClick={Submit
+      }>등록</button>
 
       {/* <div className="list">
         <h4>{title[2]}</h4>
